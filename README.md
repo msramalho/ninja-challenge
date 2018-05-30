@@ -25,6 +25,7 @@ function seq(ȶȑ){
 ```
 ### Rationale 
 
+https://javascript-minifier.com/
 
 # 2 - Don’t mess with my Shuriken
 ### Problem
