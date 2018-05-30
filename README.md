@@ -1,6 +1,6 @@
 <p align="center"><img src="https://i.imgur.com/cSV2br2.png"></p>
 
-<h3 align="center">This repo contains some thoughts belonging to <i>maps</i> aka <i>msramalho</i> on the problems of the 
+<h3 align="center">This repo contains some thoughts belonging to <i>maps</i> aka <i><a href="https://github.com/msramalho">msramalho</a></i> on the problems of the 
 <a href="https://ninjachallenge.jscrambler.com/">ninja challenge 2018</a> by 
 <a href="https://jscrambler.com/">jscrambler</a></h3>
 
@@ -92,6 +92,11 @@ var Shuriken = (function() {
         }
     });
 })();
+```
+### Rationale
+
+```javascript
+
 for (let i = 0; i < 5; i++) {
     Shuriken.throw(DrunkenFist);
     console.log(DrunkenFist.getHealth());
@@ -104,7 +109,6 @@ for (let i = 0; i < 5; i++) {
     console.log(FlyingPunch.getHealth());
 }
 ```
-### Rationale 
 
 # 3 - Steal the Jewels by Claranet
 ### Problem
