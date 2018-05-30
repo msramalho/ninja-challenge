@@ -1,3 +1,5 @@
 <p align="center"><img src="https://i.imgur.com/cSV2br2.png"></p>
 
-This repo contains some thoughts on the problems of the [ninja challenge 2018](https://ninjachallenge.jscrambler.com/) by [jscrambler](https://jscrambler.com/). 
+<h3 align="center">This repo contains some thoughts belonging to <i>maps</i> aka <i>msramalho</i> on the problems of the 
+<a href="https://ninjachallenge.jscrambler.com/">ninja challenge 2018</a> by 
+<a href="https://jscrambler.com/">jscrambler</a></h3>
