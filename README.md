@@ -189,3 +189,5 @@ var timer = setInterval(function() {
 
 
 ### Rationale 
+
+<p align="center"><img src="https://i.imgur.com/rOHYG2L.png"></p>
