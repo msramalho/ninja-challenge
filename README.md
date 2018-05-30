@@ -112,6 +112,50 @@ for (let i = 0; i < 5; i++) {
 
 # 3 - Steal the Jewels by Claranet
 ### Problem
+There is a super secure vault protected by a powerful security mechanism, that holds priceless jewels, only accessible to those wit a valid. However, the code for validating keys has been leaked and you need to be fastest at finding a valid key!!! Here is the leaked code:
+```javascript
+(function(p) {
+    p[0].parseValue = p[1][4](p[1]);
+}([
+    window, [
+        function(s) {
+            return s[0] = s[1].join(''),
+                typeof eval(s[0]) === 'function' && s[0] === 'alert';
+        },
+        function(H) {
+            for (H[1] = 0, H[2] = H[0].length; H[1] < H[2]; ++H[1]) {
+                H[0][H[1]] = String.fromCharCode(H[0][H[1]].charCodeAt(0) + 1);
+            }
+        },
+        function(g) {
+            return String.fromCharCode(g[0]) === g[1];
+        },
+        function(U) {
+            while (U[1] != 0) {
+                U[2] = U[0] & U[1], U[0] = U[0] ^ U[1], U[1] = U[2] << 1;
+            }
+            return U[0];
+        },
+        function(l) {
+            return function(j) {
+                var m;
+                return m = [], j.match(/([2-70-18-9]){1,}([^6-90-5])/g).forEach(l[5]([l, m])), l[1]([m]), l[0]([j, m]);
+            };
+        },
+        function(A) {
+            return function(y) {
+                var r = [0];
+                var len = y.length - 1;
+                var i = 0;
+                for (; i < len; ++i) {
+                    r[0] = A[0][3]([r[0], y[i]]);
+                }
+                A[0][2]([r[0], y[i]]) && A[1].push(y[i]);
+            };
+        }
+    ]
+]));
+```
 ### Rationale 
 
 # 4 - Antidotes for the Trip
