@@ -160,4 +160,31 @@ There is a super secure vault protected by a powerful security mechanism, that h
 
 # 4 - Antidotes for the Trip
 ### Problem
+```javascript
+'use strict';
+
+// <OUR CODE GOES HERE 1>
+
+var messenger = new Messenger({
+    from: '',
+    to: '',
+    text: ''
+});
+
+// <OUR CODE GOES HERE 2>
+
+var timer = setInterval(function() {
+    nextLocation();
+    if (location === CAPITAL) {
+        var message = messenger.deliverMessage();
+
+        // <OUR CODE GOES HERE 3>
+
+        clearInterval(timer);
+    }
+
+}, 1000);
+```
+
+
 ### Rationale 
