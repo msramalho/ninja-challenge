@@ -224,8 +224,7 @@ There is a super secure vault protected by a powerful security mechanism, that h
 }([
     window, [
         function(s) {
-            return s[0] = s[1].join(''),
-                typeof eval(s[0]) === 'function' && s[0] === 'alert';
+            return s[0] = s[1].join(''), typeof eval(s[0]) === 'function' && s[0] === 'alert';
         },
         function(H) {
             for (H[1] = 0, H[2] = H[0].length; H[1] < H[2]; ++H[1]) {
@@ -262,6 +261,19 @@ There is a super secure vault protected by a powerful security mechanism, that h
 ]));
 ```
 ### Rationale 
+This was designed to make you despair over what function calling what function with which function returned whoose function, function. Although a good look at the code was essential to understant that it is setting the following function `window.parseValue` and that that should be the function to call on your tests to check for a valid key, the best approach here would be debugging! So using a debugger or just some console logs (my approach)... 
+
+I inserted a `console.log("this is function XXX being called with argumetns YYY");` in every function. What I first understood was that the key should be, in some way compatile with the regex `/([2-70-18-9]){1,}([^6-90-5])/g` and so I started using some patterns that matched it like `341a`. At this stage the code would go through at stop at another point, I then realized that the pattern should be so that the sum of each digit in the key (in `341a` it is `8`) **plus 1** should match the [charCode](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/charCodeAt) value of the last char of the key. At this stage I used a key like `9999999999997s` meaning that the sum of the digits in `9999999999997` would match an `r` and so the last char should be `s`.
+
+At this point, the program flow would continue and reach the `eval` on the first function of the array, but it crashed inside it. After inspecting what happened to the string I supplied and the `eval` called, I understood that the the key should be such that foreach instance of the pattern in it, the last chars of each instance would be concatenated and the `eval` would be called. There was also this:
+```javascript
+typeof eval(s[0]) === 'function' && s[0] === 'alert';
+```
+which led me to conclude that the chars should match the word `alert` and that would evaluate to the JS `alert("something");` function. After constructing it, I got something like:
+
+```99999999996`999999999998k999999999991d9999999999995q9999999999997s```
+
+This would spell `alert` and the vault was open!! Other combinations of numbers and spaces could be used, but every regex match must lead to the addition of another letter in `alert`!
 
 # 4 - Antidotes for the Trip
 ### Problem
