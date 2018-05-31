@@ -79,7 +79,7 @@ for(var a=0,d=1;max--;d+=a+100*((a=d)%1000==155));return a&&d
 ```javascript
 for(var a=0,d=1;max--;d+=a+100*((a=d)%61==6));return a&&d
 ```
- 10. You can't go any further, right? wrong, always wrong... What if there was an `x` so that `(a=d)%x==0`? that would be the same amount of bytes as `x=61,y=6`... yes, but if `y=0`, we can still go further, like so [**55 bytes**]
+ 10. You can't go any further, right? wrong, always wrong... What if there was an `x` so that `(a=d)%x==0`? that would be the same amount of bytes as `x=61,y=6`... yes, but if `y=0`, we could still go further... Meet magic number **77**!! [**55 bytes**]:
 ```javascript
 for(var a=0,d=1;max--;d+=a+100*!((a=d)%77));return a&&d
 ```
