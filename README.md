@@ -277,6 +277,17 @@ This would spell `alert` and the vault was open!! Other combinations of numbers 
 
 # 4 - Antidotes for the Trip
 ### Problem
+You need to equip your messenger with the skills necessary to deliver a Message to the Empero:
+```
+From: Ninja
+To: Emperor
+
+    Highness,
+         My spying mission was a success and I was able to gather valuable information. 
+         The rival clan will attack the capital tomorrow at 9PM.
+    Ninja
+```
+However, many messengers had died on their way due to poisoning. And, in some cities, poison is also known as **monkey patching**. The could would be poisoned in several undisclosed places and we needed to build the antidotes for the messenger trip. This was the code we saw:
 ```javascript
 'use strict';
 
@@ -305,5 +316,35 @@ var timer = setInterval(function() {
 
 
 ### Rationale 
+A lot to be said on this one, I will not reveal the whole solution, just give some tips and remarks on what I tried and latter learned:
+ 1. The first `<OUR CODE GOES HERE 1>` was the simplest, you needed only to create an object-returning function (aka class): 
+ ```javascript
+ function Messenger(info) {
+    this.from = info.from;
+    this.to = info.to;
+    this.text = info.text;
+}
+```
+This would display the next hint: `You never left the castle`...
+ 2. Many things were tried but I will only give an example. By defining my on `setInterval` function I would have access to the poisoned code and I was able to do a lot of inspection to it using `if`s and `while(true);`s (if the code reached an infinite-loop it would take significantly longer in the server so we could due this kind of blind inspection). 
+ 3. As a matter of fact, I managed to modified their poisoned version and run a valid `eval` on it, successfully entering the `if` and running the third 
+ 
+ An example for the code in `<OUR CODE GOES HERE 2>` that did this, would be:
+ ```javascript
+ window.setInterval = function(f, time){
+    var s = ""+f; // convert to string
+    s = "var f = " + s; // cast to f variable
+    s = s.replace("===", "!="); // override their code
+    eval(s); // eval it
+    f(); // call f and get inside <OUR CODE GOES HERE 3>
+    return 1;
+}
+```
+I knew I had gotten in, because my `<OUR CODE GOES HERE 3>` was `while(true);` 😏
+
+3. The error you got when doing this reverse-monkey-patching was `You tried to freeze but it is always sunny`. This was a strong enough hint, but I was too locked inside my head and could not make sense out of it (one needs to learn how to think). You needed to use some machiavelic stuff to be able to overcome it, and that is the mind challenge I leave you with... Of course I tried dozens of other things even before I got here, but these problems, in the end, just need a clear approach in which you don't sidetrack. However, if in hindsight it looks easy, let me tell you it is not! at all!
+
+
+<h2 align="center">The End </h2>
 
 <p align="center"><img src="https://i.imgur.com/rOHYG2L.png"></p>
