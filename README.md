@@ -29,7 +29,7 @@ After some testing and simplification I came to understand that this function is
 #### Initial [dumb] approach
  0. (You only need to submit the body of the function and the header given is: `function sequence(max){...}`)
  1. Notice that weird characters are representing names of variables (`ˠビ`) and names of functions (`ʹϡ`).  
- 2. Replace all occurrences of each of these patterns with friendly characters, like letters from `a` to `q` and work from there... **this is not so simple ❗** if you analyse the code properly, you'll notice that, in certain points, the `length` property is used on functions (the number of bytes of that function when converted to text), which means that if `ʹϡ` is replaced by `a` then 3 bytes are lost and this leads to a function that does something else!! However, if you replace carefully (respecting byte length) this will produce a more readable piece of code. (The same type of thing would happen if you tried to replace the `;;` by `;`)
+ 2. Replace all occurrences of each of these patterns with friendly characters, like letters from `a` to `q` and work from there... **❗this is not so simple❗** if you analyse the code properly, you'll notice that, in certain points, the `length` property is used on functions (the number of bytes of that function when converted to text), which means that if `ʹϡ` is replaced by `a` then 3 bytes are lost and this leads to a function that does something else!! However, if you replace carefully (respecting byte length) this will produce a more readable piece of code. (The same type of thing would happen if you tried to replace the `;;` by `;`)
  3. Next steps are essentially simplifying, here are some of the more obvious things:
     * replace function `length`s by their value
     * remove unused functions
@@ -87,9 +87,9 @@ for(var a=0,d=1;max--;d+=a+100*!((a=d)%77));return a&&d
 
 
 #### _Post-mortem_ approach
- 1. Don't waste time, simple copy and paste the orignal code into a [minifier](https://javascript-minifier.com/) which would output [**290 bytes**] not a bad start:
+ 1. Don't waste time, simple copy and paste the orignal code into a [minifier](https://javascript-minifier.com/) which would output [**273 bytes**] (without using `max` - that must be done!) not a bad start :
 ```javascript
-function seq(n){var t=0,u=t,r="",f=10,o=u+1,c="length",i=n&&u+f;function e(){t=o}function a(){o=i}function g(){return t+o}function h(n){u+=l(e,r)[c]-l(r,a)[c],i=u===f*n?l(f*f,g()):g(),e(),a()}function l(n,t,u){return u?n||t:t+n}for(;u<n;)h(c[c]-l(r,f)[c]);return l(i,l(a,r)[c]-l(r,a)[c],l)}
+var t=0,u=t,r="",f=10,o=u+1,c="length",i=n&&u+f;function e(){t=o}function a(){o=i}function g(){return t+o}function h(n){u+=l(e,r)[c]-l(r,a)[c],i=u===f*n?l(f*f,g()):g(),e(),a()}function l(n,t,u){return u?n||t:t+n}for(;u<n;)h(c[c]-l(r,f)[c]);return l(i,l(a,r)[c]-l(r,a)[c],l)
 ```
  2. This would save steps 1. and 2., which is a lot!! The other steps are essentially the same.
 
