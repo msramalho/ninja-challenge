@@ -70,12 +70,12 @@ for(var n=0,e=0,f=1;e<max;f=n+(n=f)+100*(40==++e));return e&&f
 for(var a=0,d=1;max--;d+=a+100*((a=d)==102334155));return a&&d
 ```
  11. At this point, I dare the reader to think of approaches, because it was not that obvious... 
- 11. The click happened when an alternative to `((a=d)==102334155)` was actually to use the `%` module operator, given that `((a=d)%1000==155)` was true **and** there was no collision in the tests...
+ 11. The click happened when an alternative to `((a=d)==102334155)` was actually to use the `%` module operator, given that `((a=d)%1000==155)` was true **and** there was no collision in the tests... [**61 bytes**]
 ```javascript
 for(var a=0,d=1;max--;d+=a+100*((a=d)%1000==155));return a&&d
 ```
- 10. Also, in JS `1000 == 1e3`, another byte...
- 11. But then... what if the module operator could be taken further... this required a `for` loop to look for `x` such that `(a=d)%x==y` so that `y` had a single digit... and this was possible, for example for `x=61,y=6` [**57 bytes**] (notice that `x` and `y` had to be such that there was no collision in the previous factorials... this also took some time to test!!):
+ 10. Also, in JS `1000 == 1e3`, so another byte...
+ 11. But then... what if the module operator could be taken further... this required a `for` loop to look for `x` such that `(a=d)%x==y` in order to make `y` have a single digit (`y<10`)... and **this was possible**, for example for `x=61,y=6` [**57 bytes**] (notice that `x` and `y` had to be such that there was no collision in the previous factorials... this also took some time to test!!):
 ```javascript
 for(var a=0,d=1;max--;d+=a+100*((a=d)%61==6));return a&&d
 ```
@@ -83,7 +83,7 @@ for(var a=0,d=1;max--;d+=a+100*((a=d)%61==6));return a&&d
 ```javascript
 for(var a=0,d=1;max--;d+=a+100*!((a=d)%77));return a&&d
 ```
- 10. This is as far as I went: 55 f**king bytes. Nevertheless, someone was able to take it further (I estimate by one byte), but you may still do better so any PR is welcome and kudos will be widespread if you can!!
+ 10. This is as far as I went: **55 f\*\*king bytes**. Nevertheless, someone was able to take it further (I estimate by one byte), but you may still do better so any PR is welcome and kudos will be widespread if you can improve this answer(I suspect a different approach would be needed)!!
 
 
 #### _Post-mortem_ approach
@@ -122,7 +122,7 @@ for(var a=0,d=1;max--;d+=a+100*!((a=d)%77));return a&&d
 
 # 2 - Don’t mess with my Shuriken
 ### Problem
-Replace `<OUR CODE GOES HERE>` by a condition that allows the ninja to detect that there was some sabotage. The ninja will perform 5 weapon attacks, reload, and attack 5 times once more, so as to kill both enemies (`DrunkenFist` and `FlyingPunch`) after 10 throws.
+Replace `<OUR CODE GOES HERE>` by a condition that allows the ninja to detect that there was some sabotage. The ninja will perform 5 weapon attacks, reload, and attack 5 times once more, so as to kill both enemies (`DrunkenFist` and `FlyingPunch`) after 10 throws. I advise you to look at the code and to understand what is going on. 
 ```javascript
 'use strict';
 
@@ -131,7 +131,7 @@ var EnemyNinja = function(name) {
         var _health = 100;
         var _name = name;
 
-        return Object.freeze({ // no properties can be added, nothing changes
+        return Object.freeze({ // methods and properties of this object cannot be changed
             getName: function() {
                 return '' + _name;
             },
@@ -188,21 +188,32 @@ var Shuriken = (function() {
 })();
 ```
 ### Rationale
+My first few approaches were a bit overcomplicated, I was trying to assert multiple conditions at once, but given the script and the assumption that the ninja would alwyas attack 5 times (`5 * 20 == 100`) recharge for 100 times (one energy point per loop) and then attack 5 more, things got easier.
+#### Overcomplicated approach
+I need a counter to make sure that the number of times the functions is called match the value of `_energy` the ninja weapon should have. 
 
+But we could only write code inside the condition, there is no way to do a `var x = 0;` in there... nor would we be able to keep the value of that variable over the next iterations...
+
+Remember, everything in JS is an object, and so are functions! What I did was add a property to the `fn` function so that it could be incremented on every call of itself. How to do this? checking for its precious instantiation with `typeof` and ternary operators, incrementing if it is defined and setting to 0 if it is not:
 ```javascript
-
-for (let i = 0; i < 5; i++) {
-    Shuriken.throw(DrunkenFist);
-    console.log(DrunkenFist.getHealth());
-}
-for (let i = 0; i < 101; i++) {
-    Shuriken.recharge();
-}
-for (let i = 0; i < 5; i++) {
-    Shuriken.throw(FlyingPunch);
-    console.log(FlyingPunch.getHealth());
+fn.called = (typeof fn.called === "undefined") ? 0 : fn.called + 1
+```
+So the only thing to do now would be to compare it to the expected value of energy:
+```javascript
+if (
+    (fn.called = (typeof fn.called === "undefined") ? 0 : fn.called + 1) != _energy
+) {
+    throw 'Weapon-tampering-detected-o-jutsu!';
 }
 ```
+Thre you go, it works! 
+#### Why-did-I-not-think-of-this-before approach
+However, there was another approach I was latter told to work, if I recall correctly it was...
+```javascript
+_energy < 0
+```
+Yes, just that... this was partly due to the simplicity of the so-called tampering they performed... Many other conditions could be used, but it was just a matter of trying some simpler things before overdoing it. 
+
 
 # 3 - Steal the Jewels by Claranet
 ### Problem
