@@ -120,6 +120,11 @@ for(var a=0,d=1;max--;d+=a+100*((a=d)%77==0));return a&&d
 for(var a=0,d=1;max--;d+=a+100*!((a=d)%77));return a&&d
 ```
 
+#### Official solution [55 bytes]
+```javascript
+for(var a=1,g=0;max--;)g+=a+!((a=g||1)%77)*100;return g
+```
+
 # 2 - Donâ€™t mess with my Shuriken
 ### Problem
 Replace `<OUR CODE GOES HERE>` by a condition that allows the ninja to detect that there was some sabotage. The ninja will perform 5 weapon attacks, reload, and attack 5 times once more, so as to kill both enemies (`DrunkenFist` and `FlyingPunch`) after 10 throws. I advise you to look at the code and to understand what is going on. 
@@ -213,6 +218,11 @@ However, there was another approach I was latter told to work, if I recall corre
 _energy < 0
 ```
 Yes, just that... this was partly due to the simplicity of the so-called tampering they performed... Many other conditions could be used, but it was just a matter of trying some simpler things before overdoing it. 
+
+#### Official Solution
+```javascript
+fn !== this.recharge
+```
 
 
 # 3 - Steal the Jewels by Claranet
@@ -344,6 +354,29 @@ I knew I had gotten in, because my `<OUR CODE GOES HERE 3>` was `while(true);` ð
 
 3. The error you got when doing this reverse-monkey-patching was `You tried to freeze but it is always sunny`. This was a strong enough hint, but I was too locked inside my head and could not make sense out of it (one needs to learn how to think). You needed to use some machiavelic stuff to be able to overcome it, and that is the mind challenge I leave you with... Of course I tried dozens of other things even before I got here, but these problems, in the end, just need a clear approach in which you don't sidetrack. However, if in hindsight it looks easy, let me tell you it is not! at all!
 
+#### Official solution
+```javascript
+   // Part 1
+   function Messenger (message) {
+     this.message = message;
+     this.secretMessage = message.text;
+   }
+    
+   Messenger.prototype.deliverMessage = function () {
+     return this.message;
+   };
+    
+   delete window.setInterval;
+    
+   // Part 2
+   delete Object.freeze;
+   var iframe = document.body.appendChild(document.createElement('frame'));
+   var newWindow = iframe.contentWindow
+   Object.prototype.freeze = newWindow.Object.prototype.freeze;
+    
+   // Part 3
+   message.text = messenger.secretMessage;
+```
 
 <h2 align="center">The End </h2>
 
